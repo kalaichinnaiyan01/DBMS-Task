@@ -1,0 +1,153 @@
+CREATE TABLE tb_kalai_customer(
+	id INT(100) primary key AUTO_INCREMENT,
+	cus_name VARCHAR (100) NULL,
+	cus_code INT(100) NULL,
+	email VARCHAR (30) NULL,
+	phone VARCHAR (12) NULL,
+	contact_person_name VARCHAR (100) NULL,
+	contact_person_phone VARCHAR (20) NULL,
+	cus_status BIT  NOT NULL,
+	created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP(),
+	created_by VARCHAR(40) NULL,
+	modified_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP(),
+	modified_by VARCHAR(40) NULL
+) 
+------------------------------------------------------------------------------------------------------------------------------
+CREATE TABLE tb_kalai_customer_address(
+	id INT(100) NOT NULL primary key AUTO_INCREMENT,
+	customer_id INT(100) NOT NULL UNIQUE,
+	address_type VARCHAR (100)  NULL UNIQUE,
+	address_line1 VARCHAR (100)  NULL,
+	address_line2 VARCHAR (100)  NULL,
+	city VARCHAR (30)  NULL,
+	state VARCHAR (30)  NULL,
+	country VARCHAR(40)  NULL,
+	postal_code INT(10)  NOT NULL,
+	CONSTRAINT  FK_customerid FOREIGN KEY (customer_id) REFERENCES  tb_customer_kalai (id)  
+)
+----------------------------------------------------------------------------------------------------------------------------
+CREATE TABLE tb_kalai_customer_order(
+	id INT(100) NOT NULL  primary key AUTO_INCREMENT,
+	cust_id INT(100) NOT NULL,
+	order_no INT (100) NOT NULL,
+	order_date DATETIME NOT NULL,
+	no_of_items INT (200) NOT NULL,
+	order_sub_totol INT (250) NOT NULL,
+	order_discount INT (100) NULL,
+	order_totol_amount FLOAT (50) NOT NULL,
+	payment_type VARCHAR(50) NOT NULL,
+	delivery_date DATETIME NOT NULL,
+	cus_status BIT NOT NULL,
+	created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP(),
+	created_by VARCHAR (100) NULL,
+	modified_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP(),
+	modified_by VARCHAR (100)NULL,
+	CONSTRAINT  FK_custid FOREIGN KEY (cust_id) REFERENCES  tb_kalai_customer (id) 
+)
+----------------------------------------------------------------------------------------------------------------------------
+CREATE TABLE tb_kalai_customer_order_item(
+	id INT(100) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	order_id INT (100) NOT NULL,
+	item_name VARCHAR (100) NOT NULL,
+	item_sku VARCHAR (50) NOT NULL,
+	item_rate FLOAT (30) NOT NULL,
+	ordered_qty VARCHAR (150) NOT NULL,
+	order_totol FLOAT (30) NOT NULL
+)
+----------------------------------------------------------------------------------------------------------------------------
+INSERT INTO tb_kalai_customer(id,cus_name,cus_code,email,phone,contact_person_name,
+contact_person_phone,cus_status,created_by,modified_by) VALUES 
+(1,'kalai','EB001','kalai001@gmail.com','6385882196','kalai','9876543210','ACTIVE','kalai','kalai'),
+(2,'sharu','EB002','sharu002@gmail.com','6385882798','sharu','8765432109','ACTIVE','sharu','sagar'),
+(3,'anitha','EB003','anitha003@gmail.com','6345682196','anitha','7654321098','ACTIVE','anitha','raj'),
+(4,'akila','EB004','akila004@gmail.com','6385887896','akila','6543210987','INACTIVE','akila','abi'),
+(5,'abinaya','EB005','abinaya005@gmail.com','987682196','abinaya','678901234','ACTIVE','abinaya','mariya'),
+(6,'nandhini','EB006','nandhu006@gmail.com','986582196','nandhini','7890123456','INACTIVE','nandhu','vijay'),
+(7,'hajira','EB007','hajira007@gmail.com','954382196','hajira','6385882197','INACTIVE','hajira','noorul'),
+(8,'keerthana','EB008','keerthana008@gmail.com','9876882196','keerthu','8901234567','ACTIVE','keerth','veer'),
+(9,'angel','EB009','angel009@gmail.com','7645882196','angel','8901234567','INACTIVE','angel','hari'),
+(10,'asha','EB010','asha010@gmail.com','9876543210','asha','9012345678','INACTIVE','asha','pushpika');
+----------------------------------------------------------------------------------------------------------------------------
+INSERT INTO tb_kalai_customer_address(id,customer_id,address_type,
+address_line1,address_line2,city,state,country,postal_code) VALUES
+ (1,1,'Home','no 1,Gangathar nagar','phase 1,j p Nagar','Bangalore','Karnataka','India',560078),
+ (2,1,'Business','Bellandur Nagar',NULL,'Bangalore','Karnataka','India',560103),
+ (3,2,'Home','4th Floor,Uma Hyderabad House','Raj Bhavan Quarters Colony, Somajiguda','Hyderabad',
+ 'Andhra Pradesh','India',500082),
+ (4,2,'Work','Chow Chakra Complex','Shyama Prasad Road, Shillong, Patty','Silchar','Assam','India',
+ 788001),
+ (5,3,'Home','No. 46, Vallalar Street, Jagadhambigai Nagar,','Vallalar St,tb_kalai_customer_address Padi, 
+ Anna Nagar West','Chennai','Tamil Nadu','India',600050),
+ (6,3,'Business','Nagarpalik Market Rd, Sarvodaya Nagar',NULL,'Hemra','Bihar','India',851101),
+ (7,4,'Home','N Boag Rd, Lakshimi Colony','Thiyagaraya Nagar','Chennai','Tamil Nadu','India',600017),
+ (8,4,'Business','Holiday St, Arpora',NULL,'Calangute','Goa','India',403515),
+ (009,5,'Home','Karthikeyan Rd','Periyar Nagar, Perambur','Chennai','Tamil Nadu','India',600082),
+ (010,5,'Work','Munnar - Udumalpet Rd','Nullatanni','Munnar','Kerala','India',685612),              
+ (011,6,'Home','1,2, 1st Cross St, Ezhil Nagar','Tambaram','Chennai','Tamil Nadu','India',600073),
+ (012,6,'Work','Opposite Devendra Dham','NH-8, Bhuwana','Udaipur','Rajasthan','India',313001),
+ (013,7,'Home','State Highway 49','Raja Garden, Kottivakkam','Chennai','Tamil Nadu','India',600041),
+ (014,7,'Business','7A, Shri Mohan Ln, Sahanagar, Kalighat',NULL,'Kolkata','West Bengal','India',700026),
+ (015,8,'Home','Ganapathy Colony Main Rd','Austin Nagar, Alwarpet','Chennai','Tamil Nadu','India',600018),
+ (016,8,'Work','NH 74, Rudrapur',NULL,'Kotha','Uttarakhand','India',263148),
+ (017,9,'Home','6th Cross St, Thiruvalluvar Nagar','Thiruvanmiyur','Chennai','Tamil Nadu','India',600041),
+ (018,9,'Work','Plot No. 367 & 368, Kavuri Hills, Jubilee Hills','Madhapur, Ranga Reddy District',
+ 'Hyderabad','Hyderabad','India',500081),
+ (019,10,'Home','New No:25Subramanian Street','Purasawalkam','Chennai','Tamil Nadu','India',600007),
+ (020,10,'Business','Leh Main gate',NULL,'Leh City S O','Jammu and Kashmir','India',194101);
+ -------------------------------------------------------------------------------------------------------------------------------
+ INSERT INTO tb_kalai_customer_order(id,cust_id,order_no,order_date,no_of_items,order_sub_totol,order_discount,
+order_totol_amount,payment_type,delivery_date,created_by,modified_by) VALUES
+(1,1,01,'2023-4-21 00:00:00',5,4000,10,3850,'credit card','dispatched','Admin','Admin'),
+(2,2,02,'2023-4-17 00:00:00',2,9000,10,7850,'Wallet','dispatched','Admin','Admin'),
+(3,3,03,'2023-4-14 00:00:00',2,2500,10,3850,'cash on delivery','dispatched','Admin','Admin'),
+(4,4,04,'2023-4-21 00:00:00',1,3500,10,1850,'debit card','dispatched','Admin','Admin'),
+(5,5,05,'2023-4-18 00:00:00',1,2000,10,5850,'credit card','dispatched','Admin','Admin'),
+(6,6,06,'2023-4-19 00:00:00',3,8000,10,7850,'debit card','dispatched','Admin','Admin'),
+(7,7,07,'2023-4-10 00:00:00',4,7500,10,5650,'cash on delivery','dispatched','Admin','Admin');
+--------------------------------------------------------------------------------------------------------------------------------
+INSERT INTO tb_kalai_customer_order_item
+(id,order_id,item_name,item_sku,item_rate,ordered_qty,ORDER_totol)
+VALUES
+(1,1,'Air pods','stock Room',500,1,500),
+(2,1,'watch','stock Room',1000,2,2000),
+(3,1,'Charger','stock Room',2000,1,2000),
+(4,2,'Air Buds','stock Room',1500,3,4500),
+(5,2,'wired Headphones','stock Room',2000,4,8000),
+(6,3,'Blueray glass','stock Room',3000,1,3000),
+(7,3,'Mobile','stock Room',4000,2,8000),
+(8,3,'Mouse','stock Room',5000,1,5000),
+(9,4,'headphones','stock Room',6000,1,6000),
+(10,4,'laptop','stock Room',70000,1,70000);
+---------------------------------------------------------------------------------------------------------------------------------
+
+SELECT * tb_kalai_customer ;
+
+
+-------------------------------------------------------------------------------------------------------------------------------------
+
+UPDATE tb_kalai_customer 
+SET cus_status ='deleted',
+modified_date=CURRENT_TIMESTAMP 
+WHERE cus_status = 'ACTIVE' 
+LIMIT 5;
+
+-----------------------------------------------------------------------------------------------------------------------------------
+
+
+SELECT * tb_kalai_customer_address WHERE cus_status='active';
+
+----------------------------------------------------------------------------------------------------------------------------------
+
+SELECT c.*
+FROM tb_kalai_customer c
+INNER JOIN tb_kalai_customer_address ca ON c.id=ca.customer_id
+WHERE c.cus_status = 'Active'
+AND address_type='Home';
+
+---------------------------------------------------------------------------------------------------------------------------------- 
+SELECT b.id,d.item_name,d.item_sku,d.item_rate,d.ordered_qty
+FROM tb_kalai_customer_order b
+JOIN tb_kalai_customer_order_item d  
+ON d.order_id= b.id 
+WHERE b.id 
+LIMIT 7;
